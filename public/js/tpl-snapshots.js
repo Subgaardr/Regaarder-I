@@ -2262,6 +2262,74 @@
   <!-- Bottom Chapter Badge -->
   <rect x="120" y="190" width="160" height="20" rx="4" fill="rgba(6,9,18,0.88)" stroke="rgba(245,158,11,0.4)" stroke-width="1"/>
   <text x="200" y="203.5" fill="#fde68a" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="7.5" letter-spacing="1.2" text-anchor="middle">TENSION TEXT FLASH · SUSPENSE</text>
+  SNAPSHOTS['zoom-blur'] = `data:image/svg+xml;utf8,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" width="400" height="225">
+  <defs>
+    <radialGradient id="zbVignette" cx="50%" cy="50%" r="60%">
+      <stop offset="25%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="70%" stop-color="rgba(3,7,18,0.7)"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </radialGradient>
+    <radialGradient id="zbBurstRays" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="40%" stop-color="rgba(56,189,248,0.15)"/>
+      <stop offset="85%" stop-color="rgba(14,165,233,0.35)"/>
+      <stop offset="100%" stop-color="rgba(3,7,18,0.9)"/>
+    </radialGradient>
+    <filter id="zbCutoutGlow">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="rgba(0,0,0,0.95)"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="rgba(56,189,248,0.6)"/>
+    </filter>
+    <filter id="zbTextGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="rgba(56,189,248,0.75)"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.9)"/>
+    </filter>
+  </defs>
+
+  <!-- Layer 1: Documentary Background Plate with Zoom Velocity Blur -->
+  <image href="/boardroom_scene_hd.jpg" x="-30" y="-18" width="460" height="261" preserveAspectRatio="xMidYMid slice" filter="brightness(0.45) contrast(1.25)"/>
+  
+  <!-- Optical Motion Velocity Rays radiating from center -->
+  <g stroke="rgba(56,189,248,0.22)" stroke-width="1.2" stroke-dasharray="8 6" opacity="0.8">
+    <line x1="200" y1="112" x2="0" y2="0"/>
+    <line x1="200" y1="112" x2="400" y2="0"/>
+    <line x1="200" y1="112" x2="0" y2="225"/>
+    <line x1="200" y1="112" x2="400" y2="225"/>
+    <line x1="200" y1="112" x2="200" y2="0"/>
+    <line x1="200" y1="112" x2="200" y2="225"/>
+    <line x1="200" y1="112" x2="0" y2="112"/>
+    <line x1="200" y1="112" x2="400" y2="112"/>
+  </g>
+  <rect width="400" height="225" fill="url(#zbBurstRays)"/>
+  <rect width="400" height="225" fill="url(#zbVignette)"/>
+
+  <!-- Layer 2: Isolated Subject Cutout (Bursting forward into pin-sharp focus) -->
+  <g transform="translate(200, 130) scale(1.08) translate(-100, -90)" filter="url(#zbCutoutGlow)">
+    <image href="/ceo_portrait_alpha_cutout.png" x="0" y="0" width="200" height="180" preserveAspectRatio="xMidYMax meet"/>
+    <!-- AF-Lock Reticle Brackets -->
+    <path d="M 52,42 L 40,42 L 40,54" stroke="#38bdf8" stroke-width="1.8" fill="none"/>
+    <path d="M 148,42 L 160,42 L 160,54" stroke="#38bdf8" stroke-width="1.8" fill="none"/>
+    <path d="M 52,148 L 40,148 L 40,136" stroke="#38bdf8" stroke-width="1.8" fill="none"/>
+    <path d="M 148,148 L 160,148 L 160,136" stroke="#38bdf8" stroke-width="1.8" fill="none"/>
+  </g>
+
+  <!-- Top Metadata HUD -->
+  <rect x="12" y="10" width="138" height="18" rx="4" fill="rgba(3,7,18,0.88)" stroke="rgba(56,189,248,0.4)" stroke-width="0.8"/>
+  <text x="81" y="22" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="800" text-anchor="middle" letter-spacing="1">◎ ZOOM BURST FX</text>
+
+  <rect x="250" y="10" width="138" height="18" rx="4" fill="rgba(3,7,18,0.88)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
+  <text x="319" y="22" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="7.5" font-weight="800" text-anchor="middle" letter-spacing="1">48MM F/1.2 · 2.4X</text>
+
+  <!-- Layer 3: Kinetic Headline Burst (Snap to Pin-Sharp) -->
+  <g transform="translate(200, 108)" filter="url(#zbTextGlow)">
+    <text x="0" y="-14" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="7.5" letter-spacing="2.5" text-anchor="middle">[ 00:01:28 · TARGET IDENTIFIED ]</text>
+    <text x="0" y="12" fill="#ffffff" font-family="'Space Grotesk', 'Inter', sans-serif" font-weight="900" font-size="22" letter-spacing="3" text-anchor="middle">THE MASTERMIND</text>
+    <text x="0" y="26" fill="#38bdf8" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="7" letter-spacing="2" text-anchor="middle">RADIAL BURST // PIN-SHARP CUTOUT</text>
+  </g>
+
+  <!-- Bottom Telemetry Bar -->
+  <rect x="80" y="196" width="240" height="20" rx="4" fill="rgba(3,7,18,0.92)" stroke="rgba(255,255,255,0.14)" stroke-width="0.8"/>
+  <text x="200" y="209" fill="#e2e8f0" font-family="'JetBrains Mono', monospace" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="1">SHUTTER: 1/48S · VELOCITY: 2.4X · COMBO</text>
 </svg>`)}`;
 
   window.tplGetSnapshot = function (id) {

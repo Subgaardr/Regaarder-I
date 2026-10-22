@@ -27416,7 +27416,7 @@ function renderHomepageTemplates() {
 
 // Business Storytelling templates (Magnates channel): CSS-keyframe driven, wired into hover preview + customizer bridge
 const BIZ_STORY_IDS = ['empire-timeline','founder-faceoff','cash-burn-meter','deal-term-sheet','scam-redaction','market-cap-race','hostile-takeover','pyramid-scheme','money-trail-map','investigate-globe','world-map-flyover','country-morph-highlight','zoomout-context-card','border-conflict-shading','sanctions-embargo-arrows','timeline-scrubber-map'];
-const BRIDGED_HOVER_TEMPLATE_IDS = new Set(['jani-spin-flash-glitch-reveal', 'jani-flash-quad-sequence', 'wire-transfer', 'money-stack', 'jani-ftx-logo-reveal', 'jani-cross-section-reveal', 'jani-forbes-fraud-reveal','parallax','textbehind','docheight','kinetic','split','zoom','candle','balance','compound','wealth','bloom','ticker','inflation','snowball','pie','receipt','google','imessage','subscribe','countdown','redcircle','chart','typewriter','notif','hormozi','kenburns','tweet','money','glitch','map','news','quote','polaroid','comic','vhs','progress','scramble','newspaper','instagram','checklist','dark-power-sigil','og-parallax-depth-engine','spatial-3d-motion-suite','document-3d-fx-engine','jani-puzzle-narrative-suite','jani-countdown-panic-suite','nonlinear-time-flash','puzzle-piece-reveal','light-rays-lens-leaks','monochromatic-crushed-grading','heavy-elliptical-vignette','text-reveal-modifiers','glow-drop-shadows','3d-camera-move-rotation','audio-visual-jl-cuts','subbass-drops-risers','magnates-media-3d-projection','magnates-media-cc-vignette-dof','magnates-media-brightness-glow','magnates-media-multi-drop-shadows','magnates-media-shadowization','magnates-media-blend-modes','magnates-media-paper-blueprint','magnates-media-brand-wavy-hook','magnates-media-dual-silhouettes','magnates-media-ink-reveal','magnates-media-article-highlight','magnates-media-particle-vfx','parallax','textbehind','docheight','kinetic','split','zoom','fedrate','bearbull','certificate','cryptowallet','realestate','creditscore','budget','crash','dividend','supplydemand'].concat(BIZ_STORY_IDS));
+const BRIDGED_HOVER_TEMPLATE_IDS = new Set(['zoom-blur', 'jani-spin-flash-glitch-reveal', 'jani-flash-quad-sequence', 'wire-transfer', 'money-stack', 'jani-ftx-logo-reveal', 'jani-cross-section-reveal', 'jani-forbes-fraud-reveal','parallax','textbehind','docheight','kinetic','split','zoom','candle','balance','compound','wealth','bloom','ticker','inflation','snowball','pie','receipt','google','imessage','subscribe','countdown','redcircle','chart','typewriter','notif','hormozi','kenburns','tweet','money','glitch','map','news','quote','polaroid','comic','vhs','progress','scramble','newspaper','instagram','checklist','dark-power-sigil','og-parallax-depth-engine','spatial-3d-motion-suite','document-3d-fx-engine','jani-puzzle-narrative-suite','jani-countdown-panic-suite','nonlinear-time-flash','puzzle-piece-reveal','light-rays-lens-leaks','monochromatic-crushed-grading','heavy-elliptical-vignette','text-reveal-modifiers','glow-drop-shadows','3d-camera-move-rotation','audio-visual-jl-cuts','subbass-drops-risers','magnates-media-3d-projection','magnates-media-cc-vignette-dof','magnates-media-brightness-glow','magnates-media-multi-drop-shadows','magnates-media-shadowization','magnates-media-blend-modes','magnates-media-paper-blueprint','magnates-media-brand-wavy-hook','magnates-media-dual-silhouettes','magnates-media-ink-reveal','magnates-media-article-highlight','magnates-media-particle-vfx','parallax','textbehind','docheight','kinetic','split','zoom','fedrate','bearbull','certificate','cryptowallet','realestate','creditscore','budget','crash','dividend','supplydemand'].concat(BIZ_STORY_IDS));
 if (typeof window !== 'undefined' && Array.isArray(window.NEW_TESTER_TEMPLATES)) {
   window.NEW_TESTER_TEMPLATES.forEach(item => BRIDGED_HOVER_TEMPLATE_IDS.add(item.id));
 }
@@ -27965,7 +27965,7 @@ window.tplTriggerScrambleAnimation = function (rootEl, data) {
   }, intervalMs);
 };
 
-const UPGRADED_PRO_TESTER_IDS = new Set(['conspiracy-board', 'envelope-open', 'wire-transfer', 'money-stack', 'deal-term-sheet', 'pyramid-scheme', 'scam-redaction', 'ceo-portrait', 'boardroom-zoom', 'security-camera', 'film-grain', 'headline-fly', 'newspaper-3d', 'screen-blur', 'map', 'map-pin-drop', 'interview-cutin', 'power-meeting', 'fast-cut-montage', 'split-reveal', 'mask-reveal', 'tension-text']);
+const UPGRADED_PRO_TESTER_IDS = new Set(['conspiracy-board', 'envelope-open', 'wire-transfer', 'money-stack', 'deal-term-sheet', 'pyramid-scheme', 'scam-redaction', 'ceo-portrait', 'boardroom-zoom', 'security-camera', 'film-grain', 'headline-fly', 'newspaper-3d', 'screen-blur', 'map', 'map-pin-drop', 'interview-cutin', 'power-meeting', 'fast-cut-montage', 'split-reveal', 'mask-reveal', 'tension-text', 'zoom-blur']);
 
 
 window.tplBuildPowerMeetingHtml = function(pmData, isCustomizer) {
@@ -28927,6 +28927,138 @@ function startTemplateHoverVideo(cardEl, tpl, manual) {
         }
       }, 550);
       fxContainer._ttTimer = ttTimer;
+    } else if (tplId === 'zoom-blur') {
+      const zbData = (typeof window.tplGetContextualData === 'function') ? window.tplGetContextualData('zoom-blur') : {};
+      const zbScene = (typeof topCustomizerState !== 'undefined' && topCustomizerState.primaryUrl && !topCustomizerState.primaryUrl.includes('data:image/svg'))
+        ? topCustomizerState.primaryUrl
+        : (zbData.sceneUrl || '/boardroom_scene_hd.jpg');
+      const zbSubject = zbData.subjectUrl || '/ceo_portrait_alpha_cutout.png';
+      const zbHl = zbData.headline || 'THE MASTERMIND';
+      const zbKic = zbData.kicker || '[ 00:01:28 · TARGET IDENTIFIED ]';
+      const zbSub = zbData.subline || 'RADIAL BURST // PIN-SHARP CUTOUT';
+      const zbTCol = zbData.textColor || '#ffffff';
+      const zbACol = zbData.accentColor || '#38bdf8';
+      const zbKCol = zbData.kickerColor || '#fbbf24';
+      const blurPx = zbData.blurIntensity || 14;
+      const zoomMax = zbData.zoomScale || 1.35;
+
+      fxContainer.innerHTML = `
+        <div id="zb-wrap-${tplId}" style="position: absolute; inset: 0; background: #030712; overflow: hidden; display: flex; align-items: center; justify-content: center; user-select: none;">
+          <!-- Layer 1: Background Scene with Radial Blur Dynamics -->
+          <div id="zb-bg-layer" class="zb-bg-scene" style="position: absolute; inset: -24px; background-image: url('${zbScene}'); background-size: cover; background-position: center; filter: brightness(0.42) contrast(1.25) blur(0px); transform: scale(1.04); transform-origin: center center; transition: filter 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1);"></div>
+          
+          <!-- Optical Streaks -->
+          <div id="zb-streaks-${tplId}" style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 15%, rgba(56,189,248,0.2) 60%, rgba(14,165,233,0.45) 100%); mix-blend-mode: screen; opacity: 0; transition: opacity 0.22s ease-out; pointer-events: none;"></div>
+          
+          <!-- Center Reticle Line Overlay -->
+          <div style="position: absolute; inset: 0; pointer-events: none; opacity: 0.35;">
+            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: rgba(56,189,248,0.35);"></div>
+            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(56,189,248,0.35);"></div>
+          </div>
+
+          <!-- Layer 2: Cutout Subject (Bursting Forward into Pin-Sharp Focus) -->
+          <div id="zb-cutout-wrap-${tplId}" style="position: absolute; bottom: 0; left: 50%; width: 220px; height: 185px; transform: translateX(-50%) scale(0.9); transform-origin: bottom center; transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1), filter 0.25s ease-out; z-index: 3; pointer-events: none;">
+            <img id="zb-cutout-img" class="zb-cutout-img" src="${zbSubject}" alt="Cutout Subject" style="width: 100%; height: 100%; object-fit: contain; object-position: bottom center; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.95)) drop-shadow(0 0 14px rgba(56,189,248,0.55));" />
+            <!-- Corner Brackets -->
+            <div style="position: absolute; top: 12px; left: 38px; width: 12px; height: 12px; border-top: 2px solid ${zbACol}; border-left: 2px solid ${zbACol};"></div>
+            <div style="position: absolute; top: 12px; right: 38px; width: 12px; height: 12px; border-top: 2px solid ${zbACol}; border-right: 2px solid ${zbACol};"></div>
+            <div style="position: absolute; bottom: 12px; left: 38px; width: 12px; height: 12px; border-bottom: 2px solid ${zbACol}; border-left: 2px solid ${zbACol};"></div>
+            <div style="position: absolute; bottom: 12px; right: 38px; width: 12px; height: 12px; border-bottom: 2px solid ${zbACol}; border-right: 2px solid ${zbACol};"></div>
+          </div>
+
+          <!-- Optical Flash Pulse -->
+          <div id="zb-flash-${tplId}" style="position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; transition: opacity 0.08s ease-out; z-index: 4;"></div>
+
+          <!-- Layer 3: Kinetic Headline Burst (Snap to Crisp Focus) -->
+          <div id="zb-text-wrap-${tplId}" style="position: absolute; top: 44%; left: 50%; transform: translate(-50%, -50%) scale(0.8); text-align: center; z-index: 5; pointer-events: none; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease-out, opacity 0.22s ease-out; filter: blur(6px); opacity: 0.6;">
+            <div id="zb-kicker" class="zb-kicker" style="font-family: 'JetBrains Mono', monospace; font-size: 7.5px; font-weight: 800; color: ${zbKCol}; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; text-shadow: 0 0 10px rgba(245,158,11,0.8);">
+              ${zbKic}
+            </div>
+            <div id="zb-headline" class="zb-headline" style="font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 23px; font-weight: 900; color: ${zbTCol}; letter-spacing: 3.5px; text-transform: uppercase; text-shadow: 0 0 24px rgba(56,189,248,0.85), 0 4px 18px rgba(0,0,0,0.95); line-height: 1.05;">
+              ${zbHl}
+            </div>
+            <div id="zb-subline" class="zb-subline" style="font-family: 'JetBrains Mono', monospace; font-size: 7.5px; font-weight: 700; color: ${zbACol}; letter-spacing: 1.8px; margin-top: 4px;">
+              ${zbSub}
+            </div>
+          </div>
+
+          <!-- Top HUD Telemetry -->
+          <div style="position: absolute; top: 8px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 6; pointer-events: none;">
+            <div style="background: rgba(3,7,18,0.9); border: 1px solid rgba(56,189,248,0.5); padding: 2.5px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 7.5px; font-weight: 800; color: #38bdf8; letter-spacing: 1px;">
+              ◎ ZOOM BURST COMBO
+            </div>
+            <div style="background: rgba(3,7,18,0.9); border: 1px solid rgba(245,158,11,0.5); padding: 2.5px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 7.5px; font-weight: 800; color: #fbbf24; letter-spacing: 1px;">
+              48MM F/1.2 · 2.4X
+            </div>
+          </div>
+
+          <!-- Bottom Telemetry HUD -->
+          <div style="position: absolute; bottom: 8px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 6; pointer-events: none; font-family: 'JetBrains Mono', monospace; font-size: 7px; color: #cbd5e1;">
+            <span>SHUTTER: 1/48S</span>
+            <span style="color: #38bdf8; font-weight: 700;">BG BLUR + CUTOUT + KINETIC</span>
+            <span>AF-LOCK [0.85M]</span>
+          </div>
+        </div>
+      `;
+
+      const bgLayer = fxContainer.querySelector('#zb-bg-layer');
+      const streaks = fxContainer.querySelector(`#zb-streaks-${tplId}`);
+      const cutoutWrap = fxContainer.querySelector(`#zb-cutout-wrap-${tplId}`);
+      const textWrap = fxContainer.querySelector(`#zb-text-wrap-${tplId}`);
+      const flash = fxContainer.querySelector(`#zb-flash-${tplId}`);
+
+      function triggerBurstAnim() {
+        if (!bgLayer || !cutoutWrap || !textWrap) return;
+        // 1. Pre-burst prep
+        bgLayer.style.filter = 'brightness(0.35) contrast(1.3) blur(0px)';
+        bgLayer.style.transform = 'scale(1.02)';
+        cutoutWrap.style.transform = 'translateX(-50%) scale(0.88)';
+        textWrap.style.transform = 'translate(-50%, -50%) scale(0.75)';
+        textWrap.style.filter = 'blur(8px)';
+        textWrap.style.opacity = '0.4';
+        if (streaks) streaks.style.opacity = '0';
+
+        setTimeout(() => {
+          if (!document.body.contains(fxContainer)) return;
+          // 2. Optical Flash
+          if (flash) {
+            flash.style.opacity = '0.7';
+            setTimeout(() => { if (flash) flash.style.opacity = '0'; }, 70);
+          }
+          // 3. EXPLOSIVE BURST: BG gets heavy radial blur, Cutout zooms forward, Text snaps sharp!
+          const curData = (typeof window.tplGetContextualData === 'function') ? window.tplGetContextualData('zoom-blur') : {};
+          const curBlur = curData.blurIntensity || blurPx;
+          const curZoom = curData.zoomScale || zoomMax;
+
+          bgLayer.style.filter = `brightness(0.55) contrast(1.4) blur(${curBlur}px)`;
+          bgLayer.style.transform = `scale(${curZoom})`;
+          if (streaks) streaks.style.opacity = '0.85';
+
+          cutoutWrap.style.transform = 'translateX(-50%) scale(1.14)';
+          cutoutWrap.style.filter = 'drop-shadow(0 0 18px rgba(56,189,248,0.7))';
+
+          textWrap.style.transform = 'translate(-50%, -50%) scale(1.05)';
+          textWrap.style.filter = 'blur(0px)';
+          textWrap.style.opacity = '1.0';
+
+          // 4. Subtle settle
+          setTimeout(() => {
+            if (!document.body.contains(fxContainer)) return;
+            textWrap.style.transform = 'translate(-50%, -50%) scale(1.0)';
+          }, 240);
+        }, 120);
+      }
+
+      window.triggerZoomBlurBurst = triggerBurstAnim;
+      triggerBurstAnim();
+      const zbTimer = setInterval(() => {
+        if (!document.body.contains(fxContainer)) {
+          clearInterval(zbTimer);
+          return;
+        }
+        triggerBurstAnim();
+      }, 2200);
+      fxContainer._zbTimer = zbTimer;
     } else if (tplId === 'zoom') {
       const zData = (typeof window.tplGetContextualData === 'function') ? window.tplGetContextualData('zoom') : {};
       const customProd = (typeof topCustomizerState !== 'undefined' && topCustomizerState.primaryUrl && !topCustomizerState.primaryUrl.includes('data:image/svg')) ? topCustomizerState.primaryUrl : (zData.productImg || '/product_scan_3d.jpg');
@@ -32165,7 +32297,7 @@ function startTemplateHoverVideo(cardEl, tpl, manual) {
         const ff = String(Math.floor((t % 1) * 24)).padStart(2, '0');
         tcEl.textContent = `${baseDate}  ${hh}:${mm}:${ss}:${ff}`;
       }
-    } else if (['candle','balance','compound','wealth','bloom','ticker','inflation','snowball','pie','receipt','google','imessage','subscribe','countdown','redcircle','chart','typewriter','notif','hormozi','kenburns','tweet','money','glitch','map','news','quote','polaroid','comic','vhs','progress','scramble','newspaper','instagram','checklist','parallax','textbehind','docheight','kinetic','split','zoom','ceo-portrait','boardroom-zoom','fedrate','bearbull','certificate','cryptowallet','realestate','creditscore','budget','crash','dividend','supplydemand','screen-blur','interview-cutin','power-meeting'].concat(BIZ_STORY_IDS).includes(tplId)) {
+    } else if (['zoom-blur','candle','balance','compound','wealth','bloom','ticker','inflation','snowball','pie','receipt','google','imessage','subscribe','countdown','redcircle','chart','typewriter','notif','hormozi','kenburns','tweet','money','glitch','map','news','quote','polaroid','comic','vhs','progress','scramble','newspaper','instagram','checklist','parallax','textbehind','docheight','kinetic','split','zoom','ceo-portrait','boardroom-zoom','fedrate','bearbull','certificate','cryptowallet','realestate','creditscore','budget','crash','dividend','supplydemand','screen-blur','interview-cutin','power-meeting'].concat(BIZ_STORY_IDS).includes(tplId)) {
       // Self-contained CSS keyframe animations, no generic shift needed
     } else {
       const shiftX = Math.sin(t * 3) * 14;
@@ -32204,6 +32336,7 @@ function stopTemplateHoverVideo(cardEl, tpl) {
   if (fxContainer) {
     if (fxContainer._fcmTimer) { clearInterval(fxContainer._fcmTimer); fxContainer._fcmTimer = null; }
     if (fxContainer._ttTimer) { clearInterval(fxContainer._ttTimer); fxContainer._ttTimer = null; }
+    if (fxContainer._zbTimer) { clearInterval(fxContainer._zbTimer); fxContainer._zbTimer = null; }
     if (typeof window.unmountTesterTemplatePreview === 'function') {
       window.unmountTesterTemplatePreview(fxContainer);
     }

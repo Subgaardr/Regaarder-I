@@ -1167,6 +1167,25 @@
       bgMediaType: 'image'
     },
 
+    // 40C-2. Zoom Blur Burst (Editorial Combo: Background Radial Blur + Cutout Burst + Kinetic Text)
+    'zoom-blur': {
+      type: 'zoom-blur',
+      headline: 'THE MASTERMIND',
+      kicker: '[ 00:01:28 · TARGET IDENTIFIED ]',
+      subline: 'RADIAL BURST // PIN-SHARP CUTOUT',
+      subjectUrl: '/ceo_portrait_alpha_cutout.png',
+      sceneUrl: '/boardroom_scene_hd.jpg',
+      blurIntensity: 14,
+      zoomScale: 1.35,
+      subjectZoom: 1.15,
+      textColor: '#ffffff',
+      accentColor: '#38bdf8',
+      kickerColor: '#fbbf24',
+      shutterSpeed: '1/48S',
+      reticleBrackets: true,
+      fontFamily: "'Space Grotesk', sans-serif"
+    },
+
     // 40D. Security Camera Overlay
     'security-camera': {
       type: 'security-camera',
@@ -4670,6 +4689,26 @@
       if (sb) {
         if (data.subline !== undefined) sb.textContent = data.subline;
         if (data.accentColor) sb.style.color = data.accentColor;
+      }
+    } else if (tplId === 'zoom-blur') {
+      const bg = fxc.querySelector('#zb-bg-layer') || fxc.querySelector('.zb-bg-scene');
+      if (bg && data.sceneUrl) bg.style.backgroundImage = `url("${data.sceneUrl}")`;
+      const cut = fxc.querySelector('#zb-cutout-img') || fxc.querySelector('.zb-cutout-img');
+      if (cut && data.subjectUrl) cut.src = data.subjectUrl;
+      const hl = fxc.querySelector('#zb-headline') || fxc.querySelector('.zb-headline');
+      if (hl) {
+        if (data.headline !== undefined) hl.textContent = data.headline;
+        if (data.textColor) hl.style.color = data.textColor;
+      }
+      const kic = fxc.querySelector('#zb-kicker') || fxc.querySelector('.zb-kicker');
+      if (kic) {
+        if (data.kicker !== undefined) kic.textContent = data.kicker;
+        if (data.kickerColor) kic.style.color = data.kickerColor;
+      }
+      const sub = fxc.querySelector('#zb-subline') || fxc.querySelector('.zb-subline');
+      if (sub) {
+        if (data.subline !== undefined) sub.textContent = data.subline;
+        if (data.accentColor) sub.style.color = data.accentColor;
       }
     } else if (tplId === 'security-camera') {
       const root = fxc.querySelector('.tpl-security-camera');
@@ -9808,6 +9847,183 @@
         if (f) window.tplSetContextualData('boardroom-zoom', { sceneUrl: URL.createObjectURL(f) });
       });
       window.tplWireUniversalBgControls('boardroom-zoom', container);
+      return;
+    }
+
+    // =========================================================================
+    // SPECIAL HANDLER: ZOOM BLUR BURST (zoom-blur)
+    // =========================================================================
+    if (tplId === 'zoom-blur') {
+      if (wrapSec) wrapSec.style.display = 'none';
+      container.innerHTML = `
+        <div style="background: rgba(15,23,42,0.65); border: 1px solid rgba(56,189,248,0.35); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 8px #38bdf8;"></span>
+              <span style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase;">Zoom Blur Burst · Editorial Combo</span>
+            </div>
+            <button type="button" id="zb-btn-trigger-burst" style="font-size: 9px; font-weight: 800; color: #0284c7; background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.5); padding: 3px 8px; border-radius: 4px; cursor: pointer;">
+              ⚡ Trigger Burst
+            </button>
+          </div>
+
+          <!-- Headline & Kicker -->
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Kinetic Headline (Bursts forward)</span>
+            <input type="text" id="zb-inp-hl" value="${data.headline || 'THE MASTERMIND'}" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 5px 8px; color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 0.5px;" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 8.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Top Accolade / Kicker</span>
+              <input type="text" id="zb-inp-kic" value="${data.kicker || '[ 00:01:28 · TARGET IDENTIFIED ]'}" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 4px 6px; color: #fbbf24; font-size: 9.5px; font-weight: 700;" />
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 8.5px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Subline</span>
+              <input type="text" id="zb-inp-sub" value="${data.subline || 'RADIAL BURST // PIN-SHARP CUTOUT'}" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 4px 6px; color: #38bdf8; font-size: 9.5px; font-weight: 700;" />
+            </div>
+          </div>
+
+          <!-- Color Pickers -->
+          <div style="display: flex; gap: 12px; align-items: center; background: rgba(0,0,0,0.25); padding: 6px 10px; border-radius: 6px;">
+            <div style="display: flex; gap: 4px; align-items: center;">
+              <span style="font-size: 8.5px; color: #94a3b8;">Headline:</span>
+              <input type="color" id="zb-inp-tcol" value="${data.textColor || '#ffffff'}" style="width:20px;height:20px;border:none;background:transparent;cursor:pointer;" />
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+              <span style="font-size: 8.5px; color: #94a3b8;">Accent Cyan:</span>
+              <input type="color" id="zb-inp-acol" value="${data.accentColor || '#38bdf8'}" style="width:20px;height:20px;border:none;background:transparent;cursor:pointer;" />
+            </div>
+            <div style="display: flex; gap: 4px; align-items: center;">
+              <span style="font-size: 8.5px; color: #94a3b8;">Kicker Amber:</span>
+              <input type="color" id="zb-inp-kcol" value="${data.kickerColor || '#fbbf24'}" style="width:20px;height:20px;border:none;background:transparent;cursor:pointer;" />
+            </div>
+          </div>
+
+          <!-- Subject Cutout Preset Switcher -->
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Foreground Cutout Subject</span>
+              <label style="font-size: 8.5px; font-weight: 700; color: #38bdf8; background: rgba(56,189,248,0.15); border: 1px solid rgba(56,189,248,0.4); padding: 2px 6px; border-radius: 3px; cursor: pointer;">
+                + Upload Cutout
+                <input type="file" id="zb-up-cutout" accept="image/*" style="display:none;" />
+              </label>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;">
+              <button type="button" class="zb-preset-cutout-btn" data-cutout="/ceo_portrait_alpha_cutout.png" style="background: ${data.subjectUrl === '/ceo_portrait_alpha_cutout.png' ? 'rgba(56,189,248,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.subjectUrl === '/ceo_portrait_alpha_cutout.png' ? '#38bdf8' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8.5px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                Executive CEO
+              </button>
+              <button type="button" class="zb-preset-cutout-btn" data-cutout="/laptop_guy_cutout.png" style="background: ${data.subjectUrl === '/laptop_guy_cutout.png' ? 'rgba(56,189,248,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.subjectUrl === '/laptop_guy_cutout.png' ? '#38bdf8' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8.5px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                Investigator
+              </button>
+              <button type="button" class="zb-preset-cutout-btn" data-cutout="/hiker_cutout_clean_final.png" style="background: ${data.subjectUrl === '/hiker_cutout_clean_final.png' ? 'rgba(56,189,248,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.subjectUrl === '/hiker_cutout_clean_final.png' ? '#38bdf8' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8.5px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                Outdoor Figure
+              </button>
+            </div>
+          </div>
+
+          <!-- Background Scene Preset Switcher -->
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 9px; font-weight: 700; color: #94a3b8; text-transform: uppercase;">Background Scene (Radial Blur Pass)</span>
+              <label style="font-size: 8.5px; font-weight: 700; color: #fbbf24; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); padding: 2px 6px; border-radius: 3px; cursor: pointer;">
+                + Upload Scene
+                <input type="file" id="zb-up-scene" accept="image/*" style="display:none;" />
+              </label>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;">
+              <button type="button" class="zb-preset-scene-btn" data-scene="/boardroom_scene_hd.jpg" style="background: ${data.sceneUrl === '/boardroom_scene_hd.jpg' ? 'rgba(245,158,11,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.sceneUrl === '/boardroom_scene_hd.jpg' ? '#fbbf24' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                Boardroom
+              </button>
+              <button type="button" class="zb-preset-scene-btn" data-scene="/tokyo_1987_cinematic.jpg" style="background: ${data.sceneUrl === '/tokyo_1987_cinematic.jpg' ? 'rgba(245,158,11,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.sceneUrl === '/tokyo_1987_cinematic.jpg' ? '#fbbf24' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                Tokyo Night
+              </button>
+              <button type="button" class="zb-preset-scene-btn" data-scene="/clean_terminal_warroom_plate.png" style="background: ${data.sceneUrl === '/clean_terminal_warroom_plate.png' ? 'rgba(245,158,11,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.sceneUrl === '/clean_terminal_warroom_plate.png' ? '#fbbf24' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                War Room
+              </button>
+              <button type="button" class="zb-preset-scene-btn" data-scene="/cctv_surveillance_scene.jpg" style="background: ${data.sceneUrl === '/cctv_surveillance_scene.jpg' ? 'rgba(245,158,11,0.25)' : 'rgba(255,255,255,0.05)'}; border: 1px solid ${data.sceneUrl === '/cctv_surveillance_scene.jpg' ? '#fbbf24' : 'rgba(255,255,255,0.1)'}; color: #e2e8f0; font-size: 8px; font-weight: 700; padding: 4px; border-radius: 4px; cursor: pointer;">
+                Bank CCTV
+              </button>
+            </div>
+          </div>
+
+          <!-- Sliders: Blur Intensity & Shutter -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <div style="display: flex; justify-content: space-between; font-size: 8px; color: #94a3b8;">
+                <span>Radial Blur Intensity</span>
+                <span id="zb-lbl-blur">${data.blurIntensity || 14}px</span>
+              </div>
+              <input type="range" id="zb-rng-blur" min="4" max="28" value="${data.blurIntensity || 14}" style="width: 100%; accent-color: #38bdf8;" />
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <div style="display: flex; justify-content: space-between; font-size: 8px; color: #94a3b8;">
+                <span>Forward Burst Zoom</span>
+                <span id="zb-lbl-zoom">${((data.zoomScale || 1.35) * 100).toFixed(0)}%</span>
+              </div>
+              <input type="range" id="zb-rng-zoom" min="110" max="170" value="${Math.round((data.zoomScale || 1.35) * 100)}" style="width: 100%; accent-color: #fbbf24;" />
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.querySelector('#zb-inp-hl')?.addEventListener('input', e => window.tplSetContextualData('zoom-blur', { headline: e.target.value }));
+      container.querySelector('#zb-inp-kic')?.addEventListener('input', e => window.tplSetContextualData('zoom-blur', { kicker: e.target.value }));
+      container.querySelector('#zb-inp-sub')?.addEventListener('input', e => window.tplSetContextualData('zoom-blur', { subline: e.target.value }));
+      container.querySelector('#zb-inp-tcol')?.addEventListener('input', e => window.tplSetContextualData('zoom-blur', { textColor: e.target.value }));
+      container.querySelector('#zb-inp-acol')?.addEventListener('input', e => window.tplSetContextualData('zoom-blur', { accentColor: e.target.value }));
+      container.querySelector('#zb-inp-kcol')?.addEventListener('input', e => window.tplSetContextualData('zoom-blur', { kickerColor: e.target.value }));
+
+      container.querySelectorAll('.zb-preset-cutout-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const c = btn.getAttribute('data-cutout');
+          window.tplSetContextualData('zoom-blur', { subjectUrl: c });
+          if (typeof window.tplRenderContextualInspector === 'function') window.tplRenderContextualInspector('zoom-blur');
+        });
+      });
+
+      container.querySelectorAll('.zb-preset-scene-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const s = btn.getAttribute('data-scene');
+          window.tplSetContextualData('zoom-blur', { sceneUrl: s });
+          if (typeof window.tplRenderContextualInspector === 'function') window.tplRenderContextualInspector('zoom-blur');
+        });
+      });
+
+      container.querySelector('#zb-up-cutout')?.addEventListener('change', e => {
+        const f = e.target.files && e.target.files[0];
+        if (f) {
+          window.tplSetContextualData('zoom-blur', { subjectUrl: URL.createObjectURL(f) });
+          if (typeof window.tplRenderContextualInspector === 'function') window.tplRenderContextualInspector('zoom-blur');
+        }
+      });
+
+      container.querySelector('#zb-up-scene')?.addEventListener('change', e => {
+        const f = e.target.files && e.target.files[0];
+        if (f) {
+          window.tplSetContextualData('zoom-blur', { sceneUrl: URL.createObjectURL(f) });
+          if (typeof window.tplRenderContextualInspector === 'function') window.tplRenderContextualInspector('zoom-blur');
+        }
+      });
+
+      container.querySelector('#zb-rng-blur')?.addEventListener('input', e => {
+        const v = parseInt(e.target.value, 10);
+        const lbl = container.querySelector('#zb-lbl-blur');
+        if (lbl) lbl.textContent = `${v}px`;
+        window.tplSetContextualData('zoom-blur', { blurIntensity: v });
+      });
+
+      container.querySelector('#zb-rng-zoom')?.addEventListener('input', e => {
+        const v = parseInt(e.target.value, 10) / 100;
+        const lbl = container.querySelector('#zb-lbl-zoom');
+        if (lbl) lbl.textContent = `${(v * 100).toFixed(0)}%`;
+        window.tplSetContextualData('zoom-blur', { zoomScale: v });
+      });
+
+      container.querySelector('#zb-btn-trigger-burst')?.addEventListener('click', () => {
+        if (typeof window.triggerZoomBlurBurst === 'function') window.triggerZoomBlurBurst();
+      });
+
       return;
     }
 
